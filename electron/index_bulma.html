@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumnos API Interface</title>
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Alumnos</h1>
+
+            <!-- Botón para abrir modal de nuevo alumno -->
+            <button class="button is-primary" onclick="$('#modalNuevoAlumno').addClass('is-active')">Agregar Alumno</button>
+
+            <!-- Tabla de Alumnos con estilo Bulma -->
+            <table class="table is-striped is-hoverable is-fullwidth" id="miTablaDeAlumnos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>CURP</th>
+                        <th>Fecha Nacimiento</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Los alumnos se llenarán aquí -->
+                </tbody>
+            </table>
+
+
+
+
+        </div>
+    </section>
+
+    <!-- Modal para registrar nuevo alumno con estilo Bulma -->
+    <div class="modal" id="modalNuevoAlumno">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Registrar Nuevo Alumno</p>
+                <!-- <button class="delete" aria-label="close" onclick="toggleModal('modalNuevoAlumno')"></button> -->
+                <!-- Botón de cierre en el encabezado del modal -->
+                <button class="delete" aria-label="close" onclick="toggleModal('modalNuevoAlumno'); limpiarModalNuevoAlumno();"></button>
+
+            </header>
+            <section class="modal-card-body">
+                <form id="formNuevoAlumno">
+                    <div class="field">
+                        <label class="label" for="nombre">Nombre:</label>
+                        <div class="control">
+                            <input class="input" type="text" id="nombre" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label" for="apPaterno">Apellido Paterno:</label>
+                        <div class="control">
+                            <input class="input" type="text" id="apPaterno" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label" for="apMaterno">Apellido Materno:</label>
+                        <div class="control">
+                            <input class="input" type="text" id="apMaterno" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label" for="curp">CURP:</label>
+                        <div class="control">
+                            <input class="input" type="text" id="curp" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label" for="fechNac">Fecha de Nacimiento:</label>
+                        <div class="control">
+                            <input class="input" type="date" id="fechNac" required>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" onclick="guardarAlumno()">Guardar</button>
+                <!-- Botón de cierre en el pie del modal -->
+                <button class="button" onclick="toggleModal('modalNuevoAlumno'); limpiarModalNuevoAlumno();">Cerrar</button>
+            </footer>
+        </div>
+    </div>
+
+
+    <!-- Modal para editar alumno con estilo Bulma -->
+    <div class="modal" id="modalEditarAlumno">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Editar Alumno</p>
+                <button class="delete" aria-label="close" onclick="toggleModal('modalEditarAlumno')"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="field">
+                    <label class="label">ID Alumno:</label>
+                    <div class="control">
+                        <input class="input" type="text" id="editIdAlumno" disabled>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Nombre:</label>
+                    <div class="control">
+                        <input class="input" type="text" id="editNombre">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Apellido Paterno:</label>
+                    <div class="control">
+                        <input class="input" type="text" id="editApPaterno">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Apellido Materno:</label>
+                    <div class="control">
+                        <input class="input" type="text" id="editApMaterno">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">CURP:</label>
+                    <div class="control">
+                        <input class="input" type="text" id="editCurp">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Fecha de Nacimiento:</label>
+                    <div class="control">
+                        <input class="input" type="date" id="editFechNac">
+                    </div>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" onclick="guardarEdicionAlumno()">Guardar Cambios</button>
+                <button class="button" onclick="toggleModal('modalEditarAlumno')">Cerrar</button>
+            </footer>
+        </div>
+    </div>
+
+
+    <!-- Modal de Alerta Personalizado -->
+    <div class="modal" id="alertModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title" id="alertModalTitle">Alerta</p>
+                <button class="delete" aria-label="close" onclick="toggleModal('alertModal')"></button>
+            </header>
+            <section class="modal-card-body" id="alertModalBody">
+                <!-- Mensaje de alerta se irá aquí -->
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" onclick="toggleModal('alertModal')">Aceptar</button>
+            </footer>
+        </div>
+    </div>
+
+
+
+    <!-- jQuery (versión completa) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- JS de DataTables -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <!-- Tu script personalizado -->
+    <script src="script_bulma.js"></script>
+</body>
+</html>

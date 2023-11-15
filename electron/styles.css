@@ -1,0 +1,16 @@
+.fila-activo {
+    background-color: #9ef6b2 !important;
+}
+
+.fila-inactivo {
+    background-color: #ffa8af !important;
+}
+
+.modal {
+    display: none; /* Oculto por defecto */
+    /* Otros estilos para tu modal */
+}
+
+.modal.is-active {
+    display: block; /* Se muestra cuando tiene esta clase */
+}

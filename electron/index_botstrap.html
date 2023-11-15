@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumnos API Interface</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Alumnos</h1>
+
+        <!-- Botón para abrir modal de nuevo alumno -->
+        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalNuevoAlumno">Agregar Alumno</button>
+
+        <!-- Campo de Búsqueda -->
+        <!-- <div class="mt-3 mb-3">
+            <input type="text" id="busquedaTextoInput" placeholder="Buscar por texto" class="form-control">
+            <button class="btn btn-primary mt-2" onclick="buscarAlumnosPorTexto()">Buscar</button>
+        </div> -->
+
+        <!-- Botón para limpiar búsqueda y mostrar todos los alumnos -->
+        <!-- <button class="btn btn-secondary mt-2" onclick="limpiarFiltrosYMostrarTodos()">Limpiar Filtros</button> -->
+
+        <!-- Tabla de Alumnos -->
+        <table class="table" id="miTablaDeAlumnos">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                    <th>CURP</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Los alumnos se llenarán aquí -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="modalNuevoAlumno" tabindex="-1" role="dialog" aria-labelledby="modalNuevoAlumnoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalNuevoAlumnoLabel">Registrar Nuevo Alumno</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNuevoAlumno">
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apPaterno">Apellido Paterno:</label>
+                            <input type="text" class="form-control" id="apPaterno" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apMaterno">Apellido Materno:</label>
+                            <input type="text" class="form-control" id="apMaterno" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="curp">CURP:</label>
+                            <input type="text" class="form-control" id="curp" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechNac">Fecha de Nacimiento:</label>
+                            <input type="date" class="form-control" id="fechNac" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" onclick="guardarAlumno()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="modalEditarAlumno" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Alumno</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>ID Alumno:</label>
+                        <input type="text" class="form-control" id="editIdAlumno" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre:</label>
+                        <input type="text" class="form-control" id="editNombre">
+                    </div>
+                    <div class="form-group">
+                        <label>Apellido Paterno:</label>
+                        <input type="text" class="form-control" id="editApPaterno">
+                    </div>
+                    <div class="form-group">
+                        <label>Apellido Materno:</label>
+                        <input type="text" class="form-control" id="editApMaterno">
+                    </div>
+                    <div class="form-group">
+                        <label>CURP:</label>
+                        <input type="text" class="form-control" id="editCurp">
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Nacimiento:</label>
+                        <input type="date" class="form-control" id="editFechNac">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarEdicionAlumno()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery (versión completa) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- JS de DataTables -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <!-- Tu script personalizado -->
+    <script src="script.js"></script>
+</body>
+</html>
